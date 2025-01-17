@@ -4,7 +4,7 @@
   "description": "A very basic nodejs wrapper around the pg_dump and pg_restore",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "publishConfig": {
     "registry":"https://npm.pkg.github.com"

@@ -1,7 +1,15 @@
 const execa = require("execa");
 const path = require("path");
 
-let os = process.platform === "win32" ? "win" : "macos";
+let os = "macos";
+switch (process.platform) {
+  case "win32":
+    os = "win";
+    break;
+  case "linux":
+    os = "linux";
+    break;
+}
 
 let binariesPath = path.join(
   __dirname.replace("app.asar", "app.asar.unpacked"),
@@ -81,20 +89,20 @@ const restore = function ({
   filename,
   clean,
   create,
-  disableTriggers
+  disableTriggers,
 }) {
   let args = [];
-  
+
   if (clean) {
     args.push("--clean");
   }
   if (create) {
     args.push("--create");
-  } 
+  }
   if (disableTriggers) {
     args.push("--disable-triggers");
   }
-  
+
   if (password) {
     if (!(username && password && host && port && dbname)) {
       throw new Error(
