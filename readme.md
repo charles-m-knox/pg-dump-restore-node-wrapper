@@ -4,6 +4,8 @@ This very small utility that includes pg_dump and pg_restore binaries for Window
 
 A thin CLI wrapper is also provided.
 
+For Linux systems, `pg_dump` and `pg_restore` are simply executed directly from your local system. Compatibility is not guaranteed! Read more in the [Linux support section](#linux-support).
+
 ## Usage
 
 ```js
@@ -52,19 +54,28 @@ I did not use the tool to bundle the dependencies as it would corrupt the execut
 
 I used https://github.com/lucasg/Dependencies to determine the required DLL, filtering only the local dependencies.
 
-
-
 ## To publish to GHCR
 
 Add this to `package.json`
+
 ```json
   "publishConfig": {
     "registry":"https://npm.pkg.github.com"
   },
 ```
 
-and add a `.npmrc` to the root of the repo with 
+and add a `.npmrc` to the root of the repo with
+
 ```.npmrc
 //npm.pkg.github.com/:_authToken=AUTH_TOKEN
 ```
+
 Where `AUTH_TOKEN` is replaced with a GitHub token.
+
+## Linux support
+
+**Currently, only Postgres 13 is supported.** Other versions _may_ work.
+
+Linux support is implemented by simply running a `/bin/sh` script that calls `pg_dump` or `pg_restore`. The scripts are located at `bin/linux/bin/`.
+
+This implementation relies on `pg_dump` and `pg_restore` being accessible via the `$PATH` environment variable.
